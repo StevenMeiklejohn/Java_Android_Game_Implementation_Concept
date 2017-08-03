@@ -47,7 +47,7 @@ public class GameView extends SurfaceView {
             }
         });
         bmp = BitmapFactory.decodeResource(getResources(), R.drawable.player_sprite_sheet);
-        sprite = new Sprite(this,bmp);
+        sprite = new Sprite(this, bmp);
     }
 
     @Override
