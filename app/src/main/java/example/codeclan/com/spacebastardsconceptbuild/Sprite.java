@@ -4,15 +4,23 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import java.util.Random;
+
 import static android.R.attr.src;
+import static android.R.attr.x;
 
 
 public class Sprite {
 //    private static final int BMP_ROWS = 6;
 //    private static final int BMP_COLUMNS = 4;
-    private int x = 200;
-    private int y = 200;
-    private int xSpeed = 5;
+    private static final int MAX_SPEED = 5;
+    private int x;
+    private int y;
+    private int xSpeed;
+    private int ySpeed;
+//    private int x = 200;
+//    private int y = 200;
+//    private int xSpeed = 5;
     private GameView gameView;
     private Bitmap bmp;
     private int currentFrame = 0;
@@ -26,6 +34,11 @@ public class Sprite {
         this.width = bmp.getWidth() / 4;
         this.height = bmp.getHeight();
         sourceRect = new Rect(0, 0, width, height);
+        Random rnd = new Random();
+        x = rnd.nextInt(gameView.getWidth() - width);
+        y = rnd.nextInt(gameView.getHeight() - height);
+        xSpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
+        ySpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
     }
 
     private void update() {
@@ -35,7 +48,14 @@ public class Sprite {
         if (x + xSpeed < 0) {
             xSpeed = 5;
         }
+        if (y > gameView.getHeight() - height - ySpeed) {
+            ySpeed = -5;
+        }
+        if (y + ySpeed < 0) {
+            ySpeed = 5;
+        }
         x = x + xSpeed;
+        y = y + ySpeed;
         if(currentFrame ==3) {
             currentFrame = 0;}
             else
