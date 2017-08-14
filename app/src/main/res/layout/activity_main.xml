@@ -6,13 +6,51 @@
     android:layout_height="match_parent"
     tools:context="example.codeclan.com.spacebastardsconceptbuild.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/up"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_gravity="center"
+        android:background="@drawable/up_white"
+        android:layout_marginBottom="33dp"
+        android:layout_above="@+id/down"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/left"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_gravity="center"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:background="@drawable/left_white"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/right"
+        android:layout_toStartOf="@+id/right" />
+
+    <ImageView
+        android:id="@+id/right"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/left"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/right_white" />
+
+    <ImageView
+        android:id="@+id/down"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_alignLeft="@+id/up"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/up"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/down_white" />
 
 </android.support.constraint.ConstraintLayout>

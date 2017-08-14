@@ -5,14 +5,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static example.codeclan.com.spacebastardsconceptbuild.R.drawable.player;
+import static example.codeclan.com.spacebastardsconceptbuild.R.layout.activity_main;
 
 
 public class GameView extends SurfaceView {
@@ -22,6 +23,10 @@ public class GameView extends SurfaceView {
     private Sprite sprite;
     private Player player;
     private Paint paint;
+    private Bitmap up;
+    private Bitmap down;
+    private Bitmap left;
+    private Bitmap right;
     private ArrayList<Sprite> sprites;
     private ArrayList<Star> stars = new ArrayList<Star>();
 
@@ -57,20 +62,19 @@ public class GameView extends SurfaceView {
             public void surfaceChanged(SurfaceHolder holder, int format,
                                        int width, int height) {
             }
-         });
-
-//            createStars();
+            });
+   //            createStars();
 //        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemy1_sprite_sheet);
 //        sprite = new Sprite(this, bmp);
     }
 
-    private void createStars(){
-        int numStars = 100;
-        for (int i = 0; i < numStars; i++) {
-            Star s = new Star(2160, 1120);
-            stars.add(s);
-        }
-    }
+//    private void createStars(){
+//        int numStars = 100;
+//        for (int i = 0; i < numStars; i++) {
+//            Star s = new Star(2160, 1120);
+//            stars.add(s);
+//        }
+//    }
 
     private void createBackground(Canvas canvas){
         canvas.drawRGB(0, 0, 0);
@@ -92,6 +96,7 @@ public class GameView extends SurfaceView {
         sprites.add(createSprite(R.drawable.enemy_triangle_sprite_sheet));
 //        sprites.add(createPlayer(R.drawable.player_sprite_sheet_120_60));
         createPlayer(R.drawable.player_sprite_sheet_120_60);
+        createButtons(R.drawable.green_arrow_up, R.drawable.greenn_arrow_down, R.drawable.green_arrow_left, R.drawable.green_arrow_right);
 
     }
 
@@ -103,6 +108,61 @@ public class GameView extends SurfaceView {
     private void createPlayer(int resource) {
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), resource);
         this.player =  new Player(this, bmp);
+    }
+
+    private void createButtons(int resource_up, int resource_down, int resource_left, int resource_right){
+        this.up = BitmapFactory.decodeResource(getResources(), resource_up);
+        this.down = BitmapFactory.decodeResource(getResources(), resource_down);
+        this.left = BitmapFactory.decodeResource(getResources(), resource_left);
+        this.right = BitmapFactory.decodeResource(getResources(), resource_right);
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Toast.makeText(this.getContext(), "Touch event triggered " + "X: " + (int) event.getX() + "Y: " + (int) event.getY(), Toast.LENGTH_LONG).show();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+
+//        Check up button pushed.
+        if(x >= 170 && x <= 250 && y >= 720 && y <= 800) {
+            Toast.makeText(this.getContext(), "Up Button pushed", Toast.LENGTH_LONG).show();
+            if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+                this.player.movePlayer("up");
+            }
+            else if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                this.player.stopMovePlayer("up");
+            }
+        }
+//        Check down button pushed.
+        if(x >= 170 && x <= 250 && y >= 910 && y <= 1000) {
+            Toast.makeText(this.getContext(), "Down Button pushed", Toast.LENGTH_LONG).show();
+            if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+                this.player.movePlayer("down");
+            }
+            else if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                this.player.stopMovePlayer("down");
+            }
+        }
+//        Check left button pushed.
+        if(x >= 70 && x <= 150 && y >= 810 && y <= 900) {
+            Toast.makeText(this.getContext(), "Left Button pushed", Toast.LENGTH_LONG).show();
+            if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+                this.player.movePlayer("left");
+            }
+            else if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                this.player.stopMovePlayer("left");
+            }
+        }
+//        Check right button pushed.
+        if(x >= 260 && x <= 350 && y >= 810 && y <= 900) {
+            Toast.makeText(this.getContext(), "Right Button pushed", Toast.LENGTH_LONG).show();
+            if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+                this.player.movePlayer("right");
+            }
+            else if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                this.player.stopMovePlayer("right");
+            }
+        }
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -118,10 +178,15 @@ public class GameView extends SurfaceView {
 //            canvas.drawPoint(s.getX(), s.getY(), paint);
 //            s.update(5);
 //        }
+
         for (Sprite sprite : sprites) {
             sprite.onDraw(canvas);
         }
         this.player.onDraw(canvas);
+        canvas.drawBitmap(this.up, 150, 700, null);
+        canvas.drawBitmap(this.down, 150, 900, null);
+        canvas.drawBitmap(this.left, 50, 800, null);
+        canvas.drawBitmap(this.right, 250, 800, null);
     }
 }
 

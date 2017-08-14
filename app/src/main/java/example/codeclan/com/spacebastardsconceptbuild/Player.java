@@ -35,8 +35,15 @@ public class Player {
         ySpeed = 0;
     }
 
+    public void movePlayer(String direction){
+
+    }
+
+    public void stopMovePlayer(String direction){
+
+    }
+
     private void update() {
-        Random rnd = new Random();
         if (x > gameView.getWidth() - width - xSpeed) {
             x = gameView.getWidth() - width;
         }

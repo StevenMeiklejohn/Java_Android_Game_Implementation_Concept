@@ -10,7 +10,7 @@ import java.util.Random;
 public class Sprite {
 //    private static final int BMP_ROWS = 6;
 //    private static final int BMP_COLUMNS = 4;
-    private static final int MAX_SPEED = 8;
+    private static final int MAX_SPEED = 6;
     private int x;
     private int y;
     private int xSpeed;
@@ -54,7 +54,7 @@ public class Sprite {
             x = gameView.getWidth() - width;
         }
         if (y > gameView.getHeight() - height - ySpeed) {
-            ySpeed = -ySpeed;
+            ySpeed = -this.ySpeed;
         }
 //        if (y + ySpeed < 0) {
 //
