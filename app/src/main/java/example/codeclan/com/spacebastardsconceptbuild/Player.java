@@ -18,6 +18,10 @@ public class Player {
     private int width;
     private int height;
     private Rect sourceRect;
+    private boolean movingUp;
+    private boolean movingDown;
+    private boolean movingLeft;
+    private boolean movingRight;
 
     public Player(GameView gameView, Bitmap bmp) {
         this.gameView = gameView;
@@ -31,42 +35,73 @@ public class Player {
     private void setStartingPositionAndSpeed(){
         x = 100;
         y = 500;
-        xSpeed = 0;
-        ySpeed = 0;
+        xSpeed = 8;
+        ySpeed = 8;
     }
 
-    public void movePlayer(String direction){
-
+    public void setMovingUp(){
+        movingUp = true;
     }
 
-    public void stopMovePlayer(String direction){
-
+    public void stopMovingUp(){
+        movingUp = false;
     }
+
+    public void setMovingDown(){
+        movingDown = true;
+    }
+
+    public void stopMovingDown(){
+        movingDown = false;
+    }
+
+    public void setMovingLeft(){
+        movingLeft = true;
+    }
+
+    public void stopMovingLeft(){
+        movingLeft = false;
+    }
+
+    public void setMovingRight(){
+        movingRight = true;
+    }
+
+    public void stopMovingRight(){
+        movingRight = false;
+    }
+
 
     private void update() {
-        if (x > gameView.getWidth() - width - xSpeed) {
-            x = gameView.getWidth() - width;
+        if (movingRight) {
+            if (x < gameView.getWidth() - width - xSpeed) {
+                x = (x += xSpeed);
+            }
+        }
+        if (movingLeft) {
+            if (x + xSpeed > 0) {
+                x = (x -= xSpeed);
+            }
+        }
+        if (movingDown) {
+            if (y < gameView.getHeight() - height - ySpeed) {
+                y = (y += ySpeed);
+            }
+        }
+        if (movingUp) {
+            if (y + ySpeed > 0) {
+                y = (y -= ySpeed);
+            }
+        }
+//            x = x + xSpeed;
+//            y = y + ySpeed;
+            if (currentFrame == 3) {
+                currentFrame = 0;
+            } else {
+                currentFrame = ++currentFrame;
+            }
         }
 
-        if (x + xSpeed < 0){
-            x = x + width;
-        }
-        if (y > gameView.getHeight() - height - ySpeed) {
-            y = gameView.getHeight() - height;
-        }
-
-        if(y + ySpeed < 0){
-            y = 0 + height;
-        }
-        x = x + xSpeed;
-        y = y + ySpeed;
-        if(currentFrame ==3) {
-            currentFrame = 0;}
-        else
-        {
-            currentFrame = ++currentFrame;
-        }
-    }
 
 
     public void onDraw(Canvas canvas) {

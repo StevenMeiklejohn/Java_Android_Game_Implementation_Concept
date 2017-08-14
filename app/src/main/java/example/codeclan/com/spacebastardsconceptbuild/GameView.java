@@ -85,6 +85,37 @@ public class GameView extends SurfaceView {
         canvas.drawBitmap(scaledBitmap, 0, 0, null);
     }
 
+
+    public void movePlayer(String direction){
+        if(direction == "up") {
+            player.setMovingUp();
+        }
+        if(direction == "down"){
+            player.setMovingDown();
+        }
+        if(direction == "left"){
+            player.setMovingLeft();
+        }
+        if(direction == "right"){
+            player.setMovingRight();
+        }
+    }
+
+    public void stopMovePlayer(String direction){
+        if(direction == "up") {
+            player.stopMovingUp();
+        }
+        if(direction == "down"){
+            player.stopMovingDown();
+        }
+        if(direction == "left"){
+            player.stopMovingLeft();
+        }
+        if(direction == "right"){
+            player.stopMovingRight();
+        }
+    }
+
     private void createSprites(){
         sprites.add(createSprite(R.drawable.enemy1_sprite_sheet));
         sprites.add(createSprite(R.drawable.enemy1_sprite_sheet));
@@ -118,48 +149,52 @@ public class GameView extends SurfaceView {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Toast.makeText(this.getContext(), "Touch event triggered " + "X: " + (int) event.getX() + "Y: " + (int) event.getY(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this.getContext(), "Touch event triggered " + "X: " + (int) event.getX() + "Y: " + (int) event.getY(), Toast.LENGTH_LONG).show();
         int x = (int) event.getX();
         int y = (int) event.getY();
 
 //        Check up button pushed.
         if(x >= 170 && x <= 250 && y >= 720 && y <= 800) {
-            Toast.makeText(this.getContext(), "Up Button pushed", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this.getContext(), "Up Button pushed", Toast.LENGTH_LONG).show();
             if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
-                this.player.movePlayer("up");
+                movePlayer("up");
+                return true;
             }
             else if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
-                this.player.stopMovePlayer("up");
+                stopMovePlayer("up");
             }
         }
 //        Check down button pushed.
         if(x >= 170 && x <= 250 && y >= 910 && y <= 1000) {
-            Toast.makeText(this.getContext(), "Down Button pushed", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this.getContext(), "Down Button pushed", Toast.LENGTH_LONG).show();
             if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
-                this.player.movePlayer("down");
+                movePlayer("down");
+                return true;
             }
             else if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
-                this.player.stopMovePlayer("down");
+                stopMovePlayer("down");
             }
         }
 //        Check left button pushed.
         if(x >= 70 && x <= 150 && y >= 810 && y <= 900) {
-            Toast.makeText(this.getContext(), "Left Button pushed", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this.getContext(), "Left Button pushed", Toast.LENGTH_LONG).show();
             if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
-                this.player.movePlayer("left");
+                movePlayer("left");
+                return true;
             }
             else if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
-                this.player.stopMovePlayer("left");
+                stopMovePlayer("left");
             }
         }
 //        Check right button pushed.
         if(x >= 260 && x <= 350 && y >= 810 && y <= 900) {
-            Toast.makeText(this.getContext(), "Right Button pushed", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this.getContext(), "Right Button pushed", Toast.LENGTH_LONG).show();
             if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
-                this.player.movePlayer("right");
+                movePlayer("right");
+                return true;
             }
             else if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
-                this.player.stopMovePlayer("right");
+                stopMovePlayer("right");
             }
         }
         return super.onTouchEvent(event);
