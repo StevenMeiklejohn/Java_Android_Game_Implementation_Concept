@@ -7,17 +7,11 @@ import android.graphics.Rect;
 import java.util.Random;
 
 
-public class Sprite {
-//    private static final int BMP_ROWS = 6;
-//    private static final int BMP_COLUMNS = 4;
-    private static final int MAX_SPEED = 8;
+public class Player {
     private int x;
     private int y;
     private int xSpeed;
     private int ySpeed;
-//    private int x = 200;
-//    private int y = 200;
-//    private int xSpeed = 5;
     private GameView gameView;
     private Bitmap bmp;
     private int currentFrame = 0;
@@ -25,7 +19,7 @@ public class Sprite {
     private int height;
     private Rect sourceRect;
 
-    public Sprite(GameView gameView, Bitmap bmp) {
+    public Player(GameView gameView, Bitmap bmp) {
         this.gameView = gameView;
         this.bmp = bmp;
         this.width = bmp.getWidth() / 4;
@@ -35,53 +29,43 @@ public class Sprite {
     }
 
     private void setStartingPositionAndSpeed(){
-        Random rnd = new Random();
-        x = gameView.getWidth() - width;
-        y = rnd.nextInt(gameView.getHeight() - height);
-        xSpeed = rnd.nextInt(MAX_SPEED * 4) - MAX_SPEED;
-        ySpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
+        x = 100;
+        y = 500;
+        xSpeed = 0;
+        ySpeed = 0;
     }
 
     private void update() {
         Random rnd = new Random();
         if (x > gameView.getWidth() - width - xSpeed) {
-            xSpeed = -xSpeed;
-        }
-//        if (x + xSpeed < 0) {
-//            xSpeed = 5;
-//        }
-        if (x + xSpeed < 0){
             x = gameView.getWidth() - width;
         }
-        if (y > gameView.getHeight() - height - ySpeed) {
-            ySpeed = -ySpeed;
+
+        if (x + xSpeed < 0){
+            x = x + width;
         }
-//        if (y + ySpeed < 0) {
-//
-//        }
+        if (y > gameView.getHeight() - height - ySpeed) {
+            y = gameView.getHeight() - height;
+        }
+
         if(y + ySpeed < 0){
-            ySpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
+            y = 0 + height;
         }
         x = x + xSpeed;
         y = y + ySpeed;
         if(currentFrame ==3) {
             currentFrame = 0;}
-            else
-            {
-                currentFrame = ++currentFrame;
-            }
+        else
+        {
+            currentFrame = ++currentFrame;
         }
+    }
 
 
     public void onDraw(Canvas canvas) {
         update();
-//        int srcX = currentFrame * width;
-//        int srcY = height;
         this.sourceRect.left = currentFrame * width;
-
         this.sourceRect.right = this.sourceRect.left + width;
-
-//        Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
         Rect dst = new Rect(x, y, x + width, y + height);
         canvas.drawBitmap(bmp, sourceRect, dst, null);
     }

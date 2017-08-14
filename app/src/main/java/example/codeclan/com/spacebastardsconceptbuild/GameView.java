@@ -12,12 +12,15 @@ import android.view.SurfaceView;
 
 import java.util.ArrayList;
 
+import static example.codeclan.com.spacebastardsconceptbuild.R.drawable.player;
+
 
 public class GameView extends SurfaceView {
     private Bitmap bmp;
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
     private Sprite sprite;
+    private Player player;
     private Paint paint;
     private ArrayList<Sprite> sprites;
     private ArrayList<Star> stars = new ArrayList<Star>();
@@ -87,13 +90,19 @@ public class GameView extends SurfaceView {
         sprites.add(createSprite(R.drawable.enemy_triangle_sprite_sheet));
         sprites.add(createSprite(R.drawable.enemy_triangle_sprite_sheet));
         sprites.add(createSprite(R.drawable.enemy_triangle_sprite_sheet));
-        sprites.add(createSprite(R.drawable.player_sprite_sheet_120_60));
+//        sprites.add(createPlayer(R.drawable.player_sprite_sheet_120_60));
+        createPlayer(R.drawable.player_sprite_sheet_120_60);
 
     }
 
     private Sprite createSprite(int resource) {
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), resource);
         return new Sprite(this, bmp);
+    }
+
+    private void createPlayer(int resource) {
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), resource);
+        this.player =  new Player(this, bmp);
     }
 
     @Override
@@ -112,6 +121,7 @@ public class GameView extends SurfaceView {
         for (Sprite sprite : sprites) {
             sprite.onDraw(canvas);
         }
+        this.player.onDraw(canvas);
     }
 }
 
