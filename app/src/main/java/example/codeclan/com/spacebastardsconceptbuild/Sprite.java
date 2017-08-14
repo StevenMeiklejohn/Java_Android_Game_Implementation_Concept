@@ -13,7 +13,7 @@ import static android.R.attr.x;
 public class Sprite {
 //    private static final int BMP_ROWS = 6;
 //    private static final int BMP_COLUMNS = 4;
-    private static final int MAX_SPEED = 5;
+    private static final int MAX_SPEED = 8;
     private int x;
     private int y;
     private int xSpeed;
@@ -34,25 +34,36 @@ public class Sprite {
         this.width = bmp.getWidth() / 4;
         this.height = bmp.getHeight();
         sourceRect = new Rect(0, 0, width, height);
+        setStartingPositionAndSpeed();
+    }
+
+    private void setStartingPositionAndSpeed(){
         Random rnd = new Random();
-        x = rnd.nextInt(gameView.getWidth() - width);
+        x = gameView.getWidth() - width;
         y = rnd.nextInt(gameView.getHeight() - height);
-        xSpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
+        xSpeed = rnd.nextInt(MAX_SPEED * 4) - MAX_SPEED;
         ySpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
     }
 
     private void update() {
+        Random rnd = new Random();
         if (x > gameView.getWidth() - width - xSpeed) {
-            xSpeed = -5;
+            xSpeed = -xSpeed;
         }
-        if (x + xSpeed < 0) {
-            xSpeed = 5;
+//        if (x + xSpeed < 0) {
+//            xSpeed = 5;
+//        }
+        if (x + xSpeed < 0){
+            x = gameView.getWidth() - width;
         }
         if (y > gameView.getHeight() - height - ySpeed) {
-            ySpeed = -5;
+            ySpeed = -ySpeed;
         }
-        if (y + ySpeed < 0) {
-            ySpeed = 5;
+//        if (y + ySpeed < 0) {
+//
+//        }
+        if(y + ySpeed < 0){
+            ySpeed = rnd.nextInt(MAX_SPEED * 2) - MAX_SPEED;
         }
         x = x + xSpeed;
         y = y + ySpeed;

@@ -56,7 +56,7 @@ public class GameView extends SurfaceView {
             }
          });
 
-            createStars();
+//            createStars();
 //        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemy1_sprite_sheet);
 //        sprite = new Sprite(this, bmp);
     }
@@ -67,6 +67,15 @@ public class GameView extends SurfaceView {
             Star s = new Star(2160, 1120);
             stars.add(s);
         }
+    }
+
+    private void createBackground(Canvas canvas){
+        canvas.drawRGB(0, 0, 0);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, canvas.getWidth(), canvas.getHeight(), true);
+
+        canvas.drawBitmap(scaledBitmap, 0, 0, null);
     }
 
     private void createSprites(){
@@ -89,15 +98,17 @@ public class GameView extends SurfaceView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.BLACK);
 
-        paint.setColor(Color.WHITE);
-//            draw all stars
-        for(Star s: stars){
-            paint.setStrokeWidth(s.getStarWidth());
-            canvas.drawPoint(s.getX(), s.getY(), paint);
-            s.update(15);
-        }
+        createBackground(canvas);
+//        canvas.drawColor(Color.BLACK);
+
+//        paint.setColor(Color.WHITE);
+////            draw all stars
+//        for(Star s: stars){
+//            paint.setStrokeWidth(s.getStarWidth());
+//            canvas.drawPoint(s.getX(), s.getY(), paint);
+//            s.update(5);
+//        }
         for (Sprite sprite : sprites) {
             sprite.onDraw(canvas);
         }

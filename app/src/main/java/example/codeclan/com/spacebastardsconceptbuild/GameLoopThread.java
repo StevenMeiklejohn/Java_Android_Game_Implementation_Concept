@@ -3,7 +3,7 @@ package example.codeclan.com.spacebastardsconceptbuild;
 import android.graphics.Canvas;
 
 public class GameLoopThread extends Thread {
-    static final long FPS = 10;
+    static final long FPS = 60;
     private GameView view;
     private boolean running = false;
 
@@ -17,7 +17,8 @@ public class GameLoopThread extends Thread {
 
     @Override
     public void run() {
-        long ticksPS = 1000 / FPS;
+//        long ticksPS = 1000 / FPS;
+        long ticksPS = 60;
         long startTime;
         long sleepTime;
         while (running) {
